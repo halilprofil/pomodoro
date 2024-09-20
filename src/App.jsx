@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(1500); // Sayacı saniye bazında başlatıyoruz (25 dakika = 1500 saniye)
+  const [count, setCount] = useState(1500); 
   const [isRunning, setIsRunning] = useState(true);
   const [showOptions, setShowOptions] = useState(false);
-  const [pomodoroTime, setPomodoroTime] = useState(25); // Dakika cinsinden
-  const [shortBreakTime, setShortBreakTime] = useState(5); // Dakika cinsinden
-  const [longBreakTime, setLongBreakTime] = useState(15); // Dakika cinsinden
-  const [selectcolor, setSelectColor] = useState(0); // Mevcut renk
-  const [tempSelectColor, setTempSelectColor] = useState(0); // Geçici renk
-  const [selectFont, setSelectFont] = useState(0); // Mevcut font
-  const [tempSelectFont, setTempSelectFont] = useState(0); // Geçici font
+  const [pomodoroTime, setPomodoroTime] = useState(25); 
+  const [shortBreakTime, setShortBreakTime] = useState(5); 
+  const [longBreakTime, setLongBreakTime] = useState(15); 
+  const [selectcolor, setSelectColor] = useState(0);
+  const [tempSelectColor, setTempSelectColor] = useState(0); 
+  const [selectFont, setSelectFont] = useState(0); 
+  const [tempSelectFont, setTempSelectFont] = useState(0); 
   const [onApply, setOnApply] = useState(false);
-  const [activeTime, setActiveTime] = useState('pomodoro'); // Hangi zamanın aktif olduğunu tutuyoruz
+  const [activeTime, setActiveTime] = useState('pomodoro'); 
 
   const colorOptions = ['#F87070', '#70F3F8', '#D881F8'];
   const fontOptions = [
@@ -22,50 +22,49 @@ function App() {
     "'Kumbh Sans', sans-serif",
   ];
 
-  // Sayaç işlemi (her saniyede 1 azalır)
+  
   useEffect(() => {
-    if (!isRunning) return; // Sayaç durdurulduysa, interval başlatılmaz
+    if (!isRunning) return;
 
     const interval = setInterval(() => {
-      setCount((prevCount) => (prevCount === 0 ? 0 : prevCount - 1)); // Sayaç sıfıra ulaşınca durur
+      setCount((prevCount) => (prevCount === 0 ? 0 : prevCount - 1)); 
     }, 1000);
 
     return () => clearInterval(interval);
   }, [isRunning]);
 
-  // Aktif süreyi ayarlamak için fonksiyon (Dakika cinsinden süreleri saniyeye çeviriyoruz)
+  
   function setTime(timetype, timeName) {
-    setActiveTime(timeName); // Aktif zamanı belirle
-    setCount(timetype * 60); // Dakika cinsinden gelen süreyi saniyeye çeviriyoruz
+    setActiveTime(timeName); 
+    setCount(timetype * 60); 
   }
 
-  // "apply" butonuna tıklandığında geçici ayarları uygular
+  
   function handleClickApplyBtn() {
     setOnApply(true);
-    setSelectColor(tempSelectColor); // Geçici rengi kalıcı yap
-    setSelectFont(tempSelectFont); // Geçici fontu kalıcı yap
+    setSelectColor(tempSelectColor); 
+    setSelectFont(tempSelectFont); 
     setShowOptions(false);
   }
 
-  // "cancel" butonuna tıklandığında değişiklikleri geri alır
+  
   function handleClickCancelBtn() {
     setOnApply(false);
-    setTempSelectColor(selectcolor); // Geçici rengi eski renkle değiştir
-    setTempSelectFont(selectFont); // Geçici fontu eski fontla değiştir
+    setTempSelectColor(selectcolor);
+    setTempSelectFont(selectFont); 
     setShowOptions(false);
   }
 
-  // Renk seçimi
+ 
   function chooseColor(color) {
-    setTempSelectColor(color); // Geçici renk seçimi
+    setTempSelectColor(color); 
   }
 
-  // Font seçimi
+  
   function chooseFont(fontIndex) {
-    setTempSelectFont(fontIndex); // Geçici font seçimi
+    setTempSelectFont(fontIndex); 
   }
 
-  // Sayacı "MM:SS" formatında göstermek için bir fonksiyon
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -111,13 +110,12 @@ function App() {
             <button
           onClick={() => {
             if (count === 0) {
-              // Sayaç sıfırlandığında aktif zamana göre süreyi ayarla ve başlat
               if (activeTime === 'pomodoro') setCount(pomodoroTime * 60);
               if (activeTime === 'shortBreak') setCount(shortBreakTime * 60);
               if (activeTime === 'longBreak') setCount(longBreakTime * 60);
-              setIsRunning(true); // Sayacı çalıştır
+              setIsRunning(true); 
             } else {
-              setIsRunning(!isRunning); // Sayacı durdur veya başlat
+              setIsRunning(!isRunning); 
             }
           }}
         >
